@@ -1,19 +1,15 @@
 var playerName = window.prompt("What is you robot's name?");
-//note the lack of quotation marks around playerName
-console.log("Our robot's name is " + playerName);
 var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-// You can also log multiple values at once like this
-console.log(playerName, playerAttack, playerHealth);
-
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-// Before building even a simple function is is best practice to outline the steps describing what the function will accomplish as preparation, as follows:
-var fight = function () {
+// console.log("Our robot's name is " + playerName);
+
+var fight = function(enemyNames) {
     // ask users whether they want to fight or skip the battle
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
     console.log(promptFight);
@@ -23,19 +19,19 @@ var fight = function () {
         //remove enemy's health by subtracting the amount set in the playerAttack variable
         enemyHealth = enemyHealth - playerAttack;
         console.log(
-            playerName + " attacked " + enemyName + ". " + enemyName + "now has " + enemyHealth + " health remaining.");
+            playerName + " attacked " + enemyNames + ". " + enemyNames + "now has " + enemyHealth + " health remaining.");
 
         //check enemy's health
         if (enemyHealth <= 0) {
-            window.alert(enemyName + " has died!");
+            window.alert(enemyNames + " has died!");
         } else {
-            window.alert(enemyName + " still has " + enemyHealth + " health left.");
+            window.alert(enemyNames + " still has " + enemyHealth + " health left.");
         }
 
         //remove player's health by subtracting the amount set in the enemyAttack variable
         playerHealth = playerHealth - enemyAttack;
         console.log(
-            enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
+            enemyNames + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
 
         //check player's health
         if (playerHealth <= 0) {
@@ -61,22 +57,21 @@ var fight = function () {
         }
     }
     //alert users that round is starting
-    window.alert("Welcome to Robot Gladiators!");
-    window.alert(playerName + " is ready for battle!");
+    window.alert("Welcome to Robot Gladiators! " + playerName + " is ready for battle!");
 
     //subtract value of 'playerAttack' from value of 'enemyHealth' and update 'enemyHealth' variable (this is called 'scoping' a variable).
     enemyHealth = enemyHealth - playerAttack;
 
     //log result message to console to confirm
     console.log(
-        playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+        playerName + " attacked " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining."
     )
     //subtract value of enemyAttack from playerHealth and update 'playerHealth' variable
     playerHealth = playerHealth - enemyAttack;
 
     //log result message to console as confirmation
     console.log(
-        enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+        enemyNames + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
     );
     
     //check player's health
@@ -94,11 +89,19 @@ var fight = function () {
 
     // check enemy's health
     if (enemyHealth <= 0) {
-        window.alert(enemyName + " has died!");
+        window.alert(enemyNames + " has died!");
     }
     else {
-        window.alert(enemyName + " still has " + enemyHealth + " health left.");
+        window.alert(enemyNames + " still has " + enemyHealth + " health left.");
     }
 
+//Game States
+//"WIN" - Player robot has defeated all enemy robots
+//    * Fight all enemy robots
+//    * Defeat each enemy robot
+//"LOSE" - Player robot's health is zero or less
+
 // execute function
-fight();
+for(var i = 0; i < enemyNames.length; i++) {
+    fight(enemyNames[i]);
+}
