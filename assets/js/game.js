@@ -11,7 +11,7 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
-var enemyHealth = 20;
+var enemyHealth = 50;
 var enemyAttack = 12;
 
 // MAIN GAME FUNCTION
@@ -72,8 +72,6 @@ var fight = function (enemyNames) {
 
 // EXECUTE FUNCTION / function to start a new game
 var startGame = function () {
-    // // use debugger to step through script
-    // debugger;
     // reset player stats
     playerHealth = 100;
     playerAttack = 10;
@@ -93,8 +91,21 @@ var startGame = function () {
 
             // pass pickedEnemyName variable value to fight function, where it will assume value of enemyName parameter
             fight(pickedEnemyName);
+
+            // // use debugger to step through script
+            // debugger;
+            // if player is alive and not fighting the last enemy in the array
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                //ask if user would like to shop before the next round
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+
+                // if yes, call the store function
+                if (storeConfirm) {
+                    shop();
+                }
+            }
         } else {
-            window.alert("You have lost your robot in battle! To paraphrase Hemingway - 'A robot is not made for defeat. Robot can be destroyed but not defeated.' Game Over.");
+            window.alert("Aww, you have lost your robot in battle. GAME OVER. Yet to paraphrase Hemingway, 'A robot is not made for defeat. A robot may be destroyed but never defeated.'");
             break;
         }
     }
@@ -103,13 +114,13 @@ var startGame = function () {
 };
 
 // END GAME FUNCTION
-var endGame = function() {
+var endGame = function () {
     // if player is still alve, player wins!
     if (playerHealth > 0) {
         window.alert("Congrats, your robot survived! You now have a score of " + playerMoney + ". 'Victory belongs to the most persevering!' - Napoleon Bonaparte");
     }
     else {
-        window.alert("Your robot has been defeated. Let this quote from Mahatma Gandhi be of consolation: 'Victory attained by violence is tantamount to a defeat, for it is momentary.'");
+        window.alert("Sadly, your robot has been defeated. May this quote from Mahatma Gandhi be of consolation: 'Victory attained by violence is tantamount to a defeat, for it is momentary.'");
     }
     // ask player if they would like to play again
     var playAgainConfirm = window.confirm("Would you like to play again?");
@@ -122,5 +133,56 @@ var endGame = function() {
         window.alert("Thank you for playing Robot Gladiators! Come back soon.");
     }
 }
+
+var shop = function () {
+    // ask player what they would like to do
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    );
+    // use a switch statement to carry out the action
+    switch (shopOptionPrompt) {
+        case "refill":
+        case "REFILL":
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                // increase health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("Too bad, you don't have enough bank!")
+            }
+            break;
+
+        case "upgrade":
+        case "UPGRADE":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                //increase attach and decrease money
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("Unfortunately you don't have the means for those ends!")
+            }
+            break;
+
+        case "leave":
+        case "LEAVE":
+            window.alert("Leaving the store.");
+
+            // do nothing, so function will end
+            break;
+
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+
+            // call shop() again to force player to pick a valid option
+            shop();
+            break;
+    }
+};
 // start the game when the page loads
 startGame();
