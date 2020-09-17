@@ -29,15 +29,16 @@ var fight = function (enemyNames) {
             if (confirmSkip) {
                 window.alert(playerName + " has decided to skip this fight. Goodbye!");
                 // subtract money from PlayerMoney for skipping
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
         }
         // if player chooses to fight, then fight
         else if (promptFight === "fight" || promptFight === "FIGHT") {
-            // remove enemy's health by subtracting the amount set in the playerAttack variable
-            enemyHealth = enemyHealth - playerAttack;
+            // generate random damage value based on player's attack power
+            var damage = randomNumber(playerAttack - 3, playerAttack);
+            enemyHealth = Math.max(0, enemyHealth - damage);
             console.log(
                 playerName + " attacked " + enemyNames + ". " + enemyNames + " now has " + enemyHealth + " health remaining.");
             // check enemy's health
@@ -49,12 +50,14 @@ var fight = function (enemyNames) {
 
                 //leave while loop since enemy is dead
                 break;
-            } else {
+            }
+            else {
                 window.alert(enemyNames + " still has " + enemyHealth + " health left.");
             }
+            // generate random number based on enemy's attack power
+            var damage = randomNumber(enemyAttack - 3, enemyAttack);
 
-            // remove player's health by subtracting the amount set in the enemyAttack variable
-            playerHealth = playerHealth - enemyAttack;
+            playerHealth = Math.max(0, playerHealth - damage);
             console.log(
                 enemyNames + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
             // check player's health
@@ -70,7 +73,7 @@ var fight = function (enemyNames) {
     }
 }
 
-// EXECUTE FUNCTION / function to start a new game
+// START FUNCTION (execute)
 var startGame = function () {
     // reset player stats
     playerHealth = 100;
@@ -87,7 +90,7 @@ var startGame = function () {
             var pickedEnemyName = enemyNames[i];
 
             // reset health value for new enemy
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40, 60);
 
             // pass pickedEnemyName variable value to fight function, where it will assume value of enemyName parameter
             fight(pickedEnemyName);
@@ -113,6 +116,13 @@ var startGame = function () {
     endGame();
 };
 
+// RANDOM NUMBER-GENERATING FUNCTION
+var randomNumber = function (min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
 // END GAME FUNCTION
 var endGame = function () {
     // if player is still alve, player wins!
@@ -134,6 +144,7 @@ var endGame = function () {
     }
 }
 
+// SHOP FUNCTION
 var shop = function () {
     // ask player what they would like to do
     var shopOptionPrompt = window.prompt(
