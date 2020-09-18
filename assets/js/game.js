@@ -3,8 +3,7 @@
 //    * Fight all enemy robots
 //    * Defeat each enemy robot
 //"LOSE" - Player robot's health is zero or less
-// use debugger to step through script
-// debugger;
+
 // RANDOM NUMBER-GENERATING FUNCTION
 var randomNumber = function (min, max) {
     var value = Math.floor(Math.random() * (max - min + 1) + min);
@@ -12,28 +11,38 @@ var randomNumber = function (min, max) {
     return value;
 };
 
+// function to set name
+var getPlayerName = function () {
+    var name = "";
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+    }
+    console.log("Your robot's name is " + name);
+    return name;
+};
+
 // GAME VARIABLES
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
-    reset: function() {
+    reset: function () {
         this.health = 100;
         this.attack = 10;
         this.money = 10;
     }, // note comma
-    refillHealth: function() {
+    refillHealth: function () {
         if (this.money >= 7) {
             window.alert("Refilling " + playerInfo.name + "'s health by 20 for 7 dollars.");
             this.health += 20;
-            this.money -+ 7;
+            this.money - + 7;
         }
         else {
             window.alert("Too bad, you don't have enough bank!");
         }
     }, // note comma
-    upgradeAttack: function() {
+    upgradeAttack: function () {
         if (this.money >= 7) {
             window.alert("Upgrading " + playerInfo.name + "'s attack by 6 for 7 dollars.");
             this.attack += 6;
@@ -59,6 +68,8 @@ var enemyInfo = [
         attack: randomNumber(10, 14)
     }
 ];
+
+
 
 // START FUNCTION (execute)
 var startGame = function () {
