@@ -1,6 +1,7 @@
-# "Robot Gladiators" - course assignment
+# Simple Game
+## course assignment
 
-## This assignment facilitated introductions to the following topics:
+### This assignment facilitated introductions to the following topics:
 - JS
 - browser functions (confirm() alert() and prompt())
 - variables
